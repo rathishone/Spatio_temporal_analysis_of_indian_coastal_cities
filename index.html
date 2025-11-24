@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spatio-Temporal Analysis of Urban Climate Vulnerability</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Removed Chart.js for static images -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0F172A; /* slate-900 */
+            color: #E2E8F0; /* slate-200 */
+        }
+        
+        /* Glassmorphism Navbar */
+        .glass-nav {
+            background-color: rgba(15, 23, 42, 0.6); /* slate-900 with alpha */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5); /* slate-700 with alpha */
+        }
+        
+        /* Gradient Button */
+        .btn-gradient {
+            background-image: linear-gradient(to right, #0EA5E9, #2563EB); /* sky-500 to blue-600 */
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:hover {
+            box-shadow: 0 0 25px rgba(14, 165, 233, 0.4); /* sky-500 glow */
+            transform: translateY(-2px);
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: linear-gradient(to right, #0EA5E9, #3B82F6); /* sky-500 to blue-500 */
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Section Card Style */
+        .section-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.6)); /* slate-800 to slate-900 */
+            border: 1px solid #334155; /* slate-700 */
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Table styling */
+        .data-table th {
+            background-color: #1E293B; /* slate-800 */
+        }
+        .data-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.5); /* slate-800 with alpha */
+        }
+        .data-table tr:hover {
+            background-color: #334155; /* slate-700 */
+        }
+
+        /* Inner city chart card style */
+        .city-chart-card {
+            background-color: rgba(15, 23, 42, 0.8); /* slate-900 with some transparency */
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid #1E293B; /* slate-800 */
+        }
+        
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Background Gradients -->
+    <div class="absolute top-0 left-0 -translate-x-1/3 -translate-y-1/3 z-0" aria-hidden="true">
+        <div class="w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-blue-900 to-sky-700 opacity-20 blur-3xl"></div>
+    </div>
+    <div class="absolute bottom-0 right-0 translate-x-1/3 translate-y-1/3 z-0" aria-hidden="true">
+        <div class="w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-purple-900 to-blue-700 opacity-20 blur-3xl"></div>
+    </div>
+
+    <!-- Header & Nav -->
+    <header class="sticky top-0 z-50 w-full glass-nav">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Title -->
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-xl font-bold text-gradient">Climate Vulnerability Analysis</a>
+                </div>
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex md:items-center md:space-x-6">
+                    <a href="#problem" class="text-gray-300 hover:text-sky-400 transition-colors font-medium">The Problem</a>
+                    <a href="#architecture" class="text-gray-300 hover:text-sky-400 transition-colors font-medium">Architecture</a>
+                    <a href="#comparison" class="text-gray-300 hover:text-sky-400 transition-colors font-medium">Model Data</a>
+                    <a href="#results" class="text-gray-300 hover:text-sky-400 transition-colors font-medium">Results</a>
+                    <a href="#forecast" class="text-gray-300 hover:text-sky-400 transition-colors font-medium">Forecast</a>
+                    <a href="#conclusion" class="text-gray-300 hover:text-sky-400 transition-colors font-medium">Conclusion</a>
+                    <a href="#team" class="text-gray-300 hover:text-sky-400 transition-colors font-medium">Team</a>
+                </div>
+                <!-- Mobile Menu Button (Optional, not implemented for simplicity) -->
+                <div class="md:hidden">
+                    <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="relative z-10">
+
+        <!-- Hero Section -->
+        <section id="home" class="relative pt-32 pb-36 text-center overflow-hidden">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tighter text-white">
+                    Spatio-Temporal Analysis of
+                    <br>
+                    <span class="text-gradient">Urban Climate Vulnerability</span>
+                </h1>
+                <p class="mt-8 text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">
+                    A comprehensive review of seven forecasting architectures to find the most accurate model for predicting urban heat in India's vulnerable coastal cities.
+                </p>
+                <div class="mt-12">
+                    <a href="#problem" class="btn-gradient text-white font-semibold py-3 px-8 rounded-lg shadow-lg text-lg">
+                        Explore The Research
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Problem Section (Abstract + Challenge) -->
+        <section id="problem" class="py-20 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="section-card p-8 lg:p-10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <svg class="w-8 h-8 text-sky-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-11.25c-.621 0-1.125-.504-1.125-1.125v-11.25c0-.621.504-1.125 1.125-1.125H9M12 9.75v3.375c0 .621.504 1.125 1.125 1.125h3.375m-3.375 0c.621 0 1.125.504 1.125 1.125v3.375m0 0c0 .621.504 1.125 1.125 1.125h3.375M12 9.75v-3.375c0-.621-.504-1.125-1.125-1.125H9.375c-.621 0-1.125.504-1.125 1.125v3.375m0 0c0 .621-.504 1.125-1.125 1.125H4.875c-.621 0-1.125.504-1.125 1.125v3.375m0 0c0 .621.504 1.125 1.125 1.125h3.375m0 0c.621 0 1.125.504 1.125 1.125v3.375m0 0c0 .621.504 1.125 1.125 1.125h3.375" />
+                            </svg>
+                            <h2 class="text-3xl font-bold tracking-tight text-white">Abstract</h2>
+                        </div>
+                        <p class="text-lg leading-relaxed text-slate-300">
+                            Cities worldwide face unprecedented risks from urbanization and climate change. Heat, in particular, is a harmful risk to health, infrastructure, and the economy.
+                        </p>
+                        <p class="mt-4 text-lg leading-relaxed text-slate-300">
+                            This paper reviews 7 forecasting architectures to find the most accurate model for predicting temperatures. We found the <strong>Light Gradient Boosting Machine (LightGBM)</strong> provides the most reliable predictions, outperforming complex deep learning models and offering a practical tool for urban resilience.
+                        </p>
+                    </div>
+                    
+                    <div class="section-card p-8 lg:p-10 border-red-500/50">
+                        <div class="flex items-center gap-3 mb-4">
+                            <svg class="w-8 h-8 text-red-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                            </svg>
+                            <h2 class="text-3xl font-bold tracking-tight text-white">The Challenge</h2>
+                        </div>
+                        <p class="text-lg leading-relaxed text-slate-300">
+                            Coastal Indian cities like <strong>Chennai, Mumbai, and Kolkata</strong> face increasing risk from extreme heat and humidity, threatening public health and economic activity.
+                        </p>
+                        <p class="mt-4 text-lg leading-relaxed text-slate-300">
+                            Without reliable forecasting, authorities cannot implement timely responses. This research moves beyond reactive frameworks to provide a systematic, proactive prediction tool to anticipate and prepare for heat-related threats.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Diagram Section (NEWLY ADDED) -->
+        <section id="architecture" class="py-12 sm:py-16">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+                        Research <span class="text-gradient">Architecture Flow</span>
+                    </h2>
+                    <p class="mt-4 text-lg text-slate-300 max-w-3xl mx-auto">
+                        Overview of the systematic approach used for data processing, model selection, and final forecasting.
+                    </p>
+                </div>
+                
+                <div class="section-card p-6 sm:p-8">
+                    <!-- Image tag for Architecture Diagram (Ready for user's PNG/JPG) -->
+                    <div class="aspect-video bg-slate-900 rounded-lg p-4 chart-container flex items-center justify-center h-full max-h-[600px]">
+                        <img src="ARCHITECTURE DIAGRAM.png" 
+                            alt="Research Architecture Diagram: Data Ingestion, Processing, Model Comparison, and Forecasting."
+                            class="w-full h-full object-contain rounded-md"
+                            onerror="this.onerror=null; this.src='https://placehold.co/1200x600/1E293B/94A3B8?text=Load+Architecture+Diagram+Image+Here';"
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Screening Table Section -->
+        <section id="comparison" class="py-20 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Initial Model Screening</h2>
+                    <p class="mt-4 text-lg text-slate-300 max-w-3xl mx-auto">
+                        All seven models were evaluated on R-squared (R²), Mean Absolute Error (MAE), and Root Mean Squared Error (RMSE) to find the top contenders.
+                    </p>
+                </div>
+                
+                <!-- Full Comparison Table -->
+                <div class="section-card overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="data-table min-w-full divide-y divide-slate-700">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-300 uppercase tracking-wider">Model</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-300 uppercase tracking-wider">Metric</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-300 uppercase tracking-wider">Mumbai</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-300 uppercase tracking-wider">Chennai</th>
+                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-300 uppercase tracking-wider">Kolkata</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800">
+                                <!-- ANN -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap font-semibold text-white align-top" rowspan="3">ANN</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">R²</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">0.31</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">0.21</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">0.27</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">MAE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.6</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.7</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.55</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">RMSE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">5.3</td>
+                                </tr>
+                                <!-- CA-ANN -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap font-semibold text-white align-top" rowspan="3">CA-ANN</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">R²</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">0.34</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">0.22</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">0.35</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">MAE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.5</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.3</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">RMSE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.2</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.55</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.9</td>
+                                </tr>
+                                <!-- SARIMA -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap font-semibold text-white align-top" rowspan="3">SARIMA</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">R²</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-400">0.08</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-400">-0.52</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">0.36</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">MAE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.59</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">5.69</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.23</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">RMSE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">5.01</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">6.31</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.97</td>
+                                </tr>
+                                <!-- LSTM -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap font-semibold text-white align-top" rowspan="3">LSTM</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">R²</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-400">0.0</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-400">-0.07</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-400">0.0</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">MAE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.72</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.66</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">RMSE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">5.36</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.68</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.91</td>
+                                </tr>
+                                <!-- Vision Transformer (ViT) -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap font-semibold text-white align-top" rowspan="3">Vision Transformer (ViT)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">R²</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-400">-0.11</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-400">-0.59</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-red-400">-0.03</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">MAE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.36</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.73</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.82</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">RMSE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.99</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">5.41</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.88</td>
+                                </tr>
+                                <!-- Conv1D + LSTM -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap font-semibold text-white align-top" rowspan="3">Conv1D + LSTM</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">R²</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-400">0.56</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-400">0.35</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-400">0.57</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">MAE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">2.8</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.3</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.25</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">RMSE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.4</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.1</td>
+                                </tr>
+                                <!-- LightGBM -->
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap font-semibold text-white align-top" rowspan="3">LightGBM</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">R²</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-400">0.39</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-400">0.41</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-green-400">0.45</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">MAE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">2.96</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.17</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.33</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">RMSE</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.1</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">3.9</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-300">4.65</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section (LightGBM vs Conv1D+LSTM Chart) -->
+        <section id="results" class="py-20 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+                        Key Findings: <span class="text-gradient">The Head-to-Head</span>
+                    </h2>
+                    <p class="mt-4 text-lg text-slate-300 max-w-3xl mx-auto">
+                        In the final test, LightGBM's superior feature engineering proved decisive. It accurately tracked real-world values, while the deep learning model failed to generalize.
+                    </p>
+                </div>
+
+                <!-- Comparison Charts -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                    
+                    <!-- LightGBM Result (Winner) -->
+                    <div class="section-card p-6 sm:p-8 border-t-2 border-emerald-500 flex flex-col space-y-4">
+                        <h3 class="text-2xl font-bold text-white text-center mb-2"><span class="text-emerald-400">LightGBM</span></h3>
+                        
+                        <!-- LightGBM Charts Group -->
+                        <div class="space-y-4">
+                            <!-- Chennai Chart -->
+                            <div class="city-chart-card">
+                                <h4 class="text-sm font-semibold text-white mb-2">CHENNAI</h4>
+                                <div class="aspect-video chart-container flex items-center justify-center">
+                                    <img src="MAA-L.png" 
+                                        alt="LightGBM Forecast vs Actual Chart for Chennai"
+                                        class="w-full h-full object-contain rounded-md"
+                                        onerror="this.onerror=null; this.src='https://placehold.co/800x450/1E293B/94A3B8?text=Load+CHENNAI+LightGBM+Image+Here';"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Kolkata Chart -->
+                            <div class="city-chart-card">
+                                <h4 class="text-sm font-semibold text-white mb-2">KOLKATA</h4>
+                                <div class="aspect-video chart-container flex items-center justify-center">
+                                    <img src="CCU-L.png" 
+                                        alt="LightGBM Forecast vs Actual Chart for Kolkata"
+                                        class="w-full h-full object-contain rounded-md"
+                                        onerror="this.onerror=null; this.src='https://placehold.co/800x450/1E293B/94A3B8?text=Load+KOLKATA+LightGBM+Image+Here';"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Mumbai Chart -->
+                            <div class="city-chart-card">
+                                <h4 class="text-sm font-semibold text-white mb-2">MUMBAI</h4>
+                                <div class="aspect-video chart-container flex items-center justify-center">
+                                    <img src="BOM-L.png" 
+                                        alt="LightGBM Forecast vs Actual Chart for Mumbai"
+                                        class="w-full h-full object-contain rounded-md"
+                                        onerror="this.onerror=null; this.src='https://placehold.co/800x450/1E293B/94A3B8?text=Load+MUMBAI+LightGBM+Image+Here';"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6 text-center pt-4 border-t border-slate-700">
+                            <span class="inline-block bg-emerald-900 text-emerald-300 font-semibold px-4 py-1 rounded-full text-lg">R² = 0.476</span>
+                            <p class="mt-4 text-slate-300 text-lg">
+                                <strong>Result:</strong> The model's predictions closely tracked the actual temperature values, capturing seasonal peaks and valleys with high accuracy.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Conv1D+LSTM Result (Runner-Up) -->
+                    <div class="section-card p-6 sm:p-8 border-t-2 border-rose-500 flex flex-col space-y-4">
+                        <h3 class="text-2xl font-bold text-white text-center mb-2"><span class="text-rose-400">Conv1D+LSTM</span></h3>
+                        
+                        <!-- Conv1D+LSTM Charts Group -->
+                        <div class="space-y-4">
+                            <!-- Chennai Chart -->
+                            <div class="city-chart-card">
+                                <h4 class="text-sm font-semibold text-white mb-2">CHENNAI</h4>
+                                <div class="aspect-video chart-container flex items-center justify-center">
+                                    <img src="MAA.png" 
+                                        alt="Conv1D+LSTM Forecast vs Actual Chart for Chennai"
+                                        class="w-full h-full object-contain rounded-md"
+                                        onerror="this.onerror=null; this.src='https://placehold.co/800x450/1E293B/94A3B8?text=Load+CHENNAI+LSTM+Image+Here';"
+                                    >
+                                </div>
+                            </div>
+
+                            <!-- Kolkata Chart -->
+                            <div class="city-chart-card">
+                                <h4 class="text-sm font-semibold text-white mb-2">KOLKATA</h4>
+                            <div class="aspect-video chart-container flex items-center justify-center">
+                                <img src="CCU.png"
+                                    alt="Conv1D+LSTM Forecast vs Actual Chart for Kolkata"
+                                    class="w-full h-full object-contain rounded-md"
+                                    onerror="this.onerror=null; this.src='https://placehold.co/800x450/1E293B/94A3B8?text=Load+KOLKATA+LSTM+Image+Here';"
+                                >
+                            </div>
+                            </div>
+                            
+                            <!-- Mumbai Chart -->
+                            <div class="city-chart-card">
+                                <h4 class="text-sm font-semibold text-white mb-2">MUMBAI</h4>
+                                <div class="aspect-video chart-container flex items-center justify-center">
+                                    <img src="BOM.png"
+                                        alt="Conv1D+LSTM Forecast vs Actual Chart for Mumbai"
+                                        class="w-full h-full object-contain rounded-md"
+                                        onerror="this.onerror=null; this.src='https://placehold.co/800x450/1E293B/94A3B8?text=Load+MUMBAI+LSTM+Image+Here';"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 text-center pt-4 border-t border-slate-700">
+                            <span class="inline-block bg-rose-900 text-rose-300 font-semibold px-4 py-1 rounded-full text-lg">R² = -0.384</span>
+                             <p class="mt-4 text-slate-300 text-lg">
+                                <strong>Result:</strong> The deep learning model failed to generalize. Its predictions were "too smooth" and completely missed the data's volatility.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Final Projections Section (Multi-City Forecast Chart) -->
+        <section id="forecast" class="py-20 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">
+                        Final <span class="text-gradient">Projections (2025-2030)</span>
+                    </h2>
+                    <p class="mt-4 text-lg text-slate-300 max-w-3xl mx-auto">
+                        Using the validated LightGBM model, we generated the final six-year temperature forecast for all three cities.
+                    </p>
+                </div>
+                
+                <div class="section-card p-6 sm:p-8">
+                    
+                    <!-- Image tag for Final Projection Chart (Ready for user's PNG/JPG) -->
+                    <div class="aspect-video bg-slate-900 rounded-lg p-4 chart-container flex items-center justify-center">
+                        <img src="FINAL OUTPUT.png" 
+                            alt="Final Tmin/Tmax Projections 2025-2030"
+                            class="w-full h-full object-contain rounded-md"
+                            onerror="this.onerror=null; this.src='https://placehold.co/1200x675/1E293B/94A3B8?text=Load+Forecast+Image+Here';"
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion Section -->
+        <section id="conclusion" class="py-20 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Conclusion & Future Directions</h2>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-10">
+                    <!-- Conclusion -->
+                    <div class="lg:col-span-3 section-card p-8 lg:p-10">
+                        <h3 class="text-2xl font-bold text-white mb-6">Key Takeaway</h3>
+                        <blockquote class="border-l-4 border-sky-500 pl-6 py-2 text-xl lg:text-2xl text-slate-100 italic leading-relaxed">
+                            "The main takeaway... is that a solid classical machine model with clear feature engineering ultimately outperformed a more complex, end-to-end style deep learning model."
+                        </blockquote>
+                        <p class="mt-6 text-lg text-slate-300">
+                            The LightGBM model was identified as the best and most reliable framework. Its success was not due to complexity, but to intentional and robust feature engineering, which provided clear signals for the model to learn from. This confirms LightGBM as a highly effective and consistent tool for climate forecasting.
+                        </p>
+                    </div>
+
+                    <!-- Future Directions -->
+                    <div class="lg:col-span-2 section-card p-8 lg:p-10 border-purple-500/50">
+                        <h3 class="text-2xl font-bold text-white mb-6">Future Directions</h3>
+                        <p class="text-lg text-slate-300 mb-4">
+                            The key next step is to move from forecasting to actionable guidance.
+                        </p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 flex-shrink-0 text-purple-400 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 12l4.179 2.25m0 0l5.571 3 5.571-3m0 0l4.179-2.25L12 9.75l-4.179 2.25z" /></svg>
+                                <div>
+                                    <h4 class="font-semibold text-white">Urban Digital Twins</h4>
+                                    <p class="text-slate-300">Build decision support systems, potentially using a "digital twin" of a city to simulate heatwave impacts in real-time.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 flex-shrink-0 text-purple-400 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 12l4.179 2.25m0 0l5.571 3 5.571-3m0 0l4.179-2.25L12 9.75l-4.179 2.25z" /></svg>
+                                <div>
+                                    <h4 class="font-semibold text-white">RFR with Forumlation of HI</h4>
+                                    <p class="text-slate-300">Build a even more accurate model using HI index formula used by U.S. National Weather Service (NWS) known as Regression equation that is embedded in a simpler but effecient Random Forest Regression Model </p>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <svg class="w-6 h-6 flex-shrink-0 text-purple-400 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M14.25 10.5v-5.25m0 5.25v5.25m0-5.25H9.75m4.5 0H18.75m-4.5 0V6m0 4.5v5.25m0-5.25H9.75m4.5 0H18.75M12 21a9 9 0 110-18 9 9 0 010 18z" /></svg>
+                                <div>
+                                    <h4 class="font-semibold text-white">Explainable AI (XAI)</h4>
+                                    <p class="text-slate-300">Integrate XAI to make model outputs clear and reliable for policymakers, building trust and enabling real-world action.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Heat Index Formula Section (NEW LOCATION) -->
+        <section id="heat-index-formula" class="py-20 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                <div class="section-card p-8 lg:p-10 border-sky-500/50">
+                    <h2 class="text-3xl font-bold tracking-tight text-white mb-6">
+                        Heat Index Formula (U.S. NWS Regression Equation)
+                    </h2>
+                    
+                    <div class="overflow-x-auto p-4 bg-slate-900 rounded-lg border border-slate-700 mb-6">
+                        <p class="text-xl font-mono text-sky-300 leading-relaxed whitespace-nowrap md:whitespace-normal">
+                            [Image of Heat Index formula]
+                            <strong>HI = </strong> -42.379 + 2.04901523*T + 10.14333127*RH - 0.22475541*T*RH - 0.00683783*T*T - 0.05481717*RH*RH + 0.00122874*T*T*RH + 0.00085282*T*RH*RH - 0.00000199*T*T*RH*RH
+                        </p>
+                    </div>
+
+                    <h4 class="text-xl font-semibold text-white mb-3">Key Components of the Formula</h4>
+                    <p class="text-lg text-slate-300">
+                        The long polynomial equation relates these two variables:
+                        <ul class="list-disc pl-5 mt-3 space-y-2 text-slate-400">
+                            <li><strong>HI (Heat Index):</strong> The resulting "feels like" temperature (in degrees Fahrenheit for this formula).</li>
+                            <li><strong>T (Temperature):</strong> The ambient dry-bulb air temperature (in degrees Fahrenheit).</li>
+                            <li><strong>RH (Relative Humidity):</strong> The relative humidity expressed as a percentage value (between 0 and 100).</li>
+                        </ul>
+                    </p>
+                    <p class="mt-4 text-lg text-slate-300">
+                        The formula calculates a subjective temperature value because it accounts for how high humidity inhibits the body's natural cooling process.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team" class="py-20 sm:py-24">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white text-center mb-16">Meet the Research Team</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    
+                    <!-- Team Member 1 -->
+                    <div class="section-card p-8 text-center transition-all duration-300 hover:border-sky-500/50 hover:-translate-y-1">
+                        <div class="text-2xl font-bold text-white">Ms. K. Indumathi</div>
+                        <div class="text-sky-400 mt-1 text-lg">Assistant Professor – IT</div>
+                        <div class="text-slate-400 mt-3">Rajalakshmi Engineering College</div>
+                        <div class="text-slate-500 text-sm mt-1">Chennai, India</div>
+                    </div>
+
+                    <!-- Team Member 2 -->
+                    <div class="section-card p-8 text-center transition-all duration-300 hover:border-sky-500/50 hover:-translate-y-1">
+                        <div class="text-2xl font-bold text-white">Rathish R</div>
+                        <div class="text-sky-400 mt-1 text-lg">Information Technology</div>
+                        <div class="text-slate-400 mt-3">Rajalakshmi Engineering College</div>
+                        <div class="text-slate-500 text-sm mt-1">Chennai, India</div>
+                    </div>
+                    
+                    <!-- Team Member 3 -->
+                    <div class="section-card p-8 text-center transition-all duration-300 hover:border-sky-500/50 hover:-translate-y-1">
+                        <div class="text-2xl font-bold text-white">Rohan John</div>
+                        <div class="text-sky-400 mt-1 text-lg">Information Technology</div>
+                        <div class="text-slate-400 mt-3">Rajalakshmi Engineering College</div>
+                        <div class="text-slate-500 text-sm mt-1">Chennai, India</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-700/50 py-12">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-400">
+            <p class="text-sm">
+                This website presents a summary of the research paper "A Survey on Spatio-Temporal Analysis of Urban Climate Vulnerability".
+            </p>
+        </div>
+    </footer>
+    
+</body>
+
+</html>
